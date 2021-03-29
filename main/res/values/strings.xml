@@ -1,0 +1,600 @@
+<resources>
+    <string name="app_name">Inköpslistan</string>
+    <string name="btn_add">Lägg till</string>
+    <string name="btn1">Rätt 1</string>
+    <string name="btn2">Rätt 2</string>
+    <string name="btn3">Rätt 3</string>
+    <string name="btn4">Rätt 4</string>
+    <string name="btn5">Rätt 5</string>
+    <string name="btn6">Rätt 6</string>
+    <string name="btn7">Rätt 7</string>
+    <string name="btn_next">Inventera ></string>
+    <string name="dialog_title">Ingredienser</string>
+    <string name="shopping_title">Inköpslista</string>
+    <string name="ok_label">OK</string>
+    <string name="btn_back">Tillbaka</string>
+    <string name="tv_done">Handlat färdigt?</string>
+    <string name="dismiss_label">Avbryt</string>
+    <string name="clear_all_label">Rensa</string>
+    <string name="btn_list">Inköpslista ></string>
+    <string name="ratt_5">Rätt 5</string>
+    <string name="ratt_6">Rätt 6</string>
+    <string name="ratt_7">Rätt 7</string>
+    <string name="ratt_1">Rätt 1</string>
+    <string name="ratt_2">Rätt 2</string>
+    <string name="ratt_3">Rätt 3</string>
+    <string name="ratt_4">Rätt 4</string>
+    <string name="enter_unit">Enhet</string>
+    <string name="enter_name">Vara</string>
+
+    <string-array name="menu">
+        <item>Rätt 1</item>
+        <item>Rätt 2</item>
+        <item>Rätt 3</item>
+        <item>Rätt 4</item>
+        <item>Rätt 5</item>
+        <item>Rätt 6</item>
+        <item>Rätt 7</item>
+    </string-array>
+
+    <string-array name="dishes">
+        <item>Lasagne</item>
+        <item>Bolognese</item>
+        <item>Pizza Bianca</item>
+        <item>Spenatpaj</item>
+        <item>Grönkålspaj</item>
+        <item>Falafel</item>
+        <item>Tacos</item>
+        <item>Risotto</item>
+        <item>Palak Paneer</item>
+        <item>Zucchinipasta</item>
+    </string-array>
+
+    <string-array name="dishes_amount">
+        <item>lasagne_amount</item>
+        <item>bolognese_amount</item>
+        <item>pizza_bianca_amount</item>
+        <item>spenatpaj_amount</item>
+        <item>gronkalspaj_amount</item>
+        <item>falafel_amount</item>
+        <item>tacos_amount</item>
+        <item>risotto_amount</item>
+        <item>palak_paneer_amount</item>
+        <item>zucchinipasta_amount</item>
+    </string-array>
+
+
+    <string-array name="lasagne">
+        <item>vitlöksklyftor</item>
+        <item>gul lök</item>
+        <item>sojafärs</item>
+        <item>lasagneplattor</item>
+        <item>tomatpuré</item>
+        <item>grönsaksbuljongtärning</item>
+        <item>salt</item>
+        <item>svartpeppar</item>
+        <item>oregano</item>
+        <item>ketchup</item>
+        <item>vetemjöl</item>
+        <item>smör</item>
+        <item>mjölk</item>
+        <item>riven ost</item>
+    </string-array>
+
+    <string-array name="lasagne_unit">
+        <item>st</item>
+        <item>st</item>
+        <item>g</item>
+        <item>g</item>
+        <item>msk</item>
+        <item>st</item>
+        <item>tsk</item>
+        <item>krm</item>
+        <item>msk</item>
+        <item>-</item>
+        <item>dl</item>
+        <item>g</item>
+        <item>dl</item>
+        <item>dl</item>
+    </string-array>
+
+    <string-array name="lasagne_amount">
+        <item>2</item>
+        <item>1</item>
+        <item>400</item>
+        <item>300</item>
+        <item>2</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>3</item>
+        <item>0</item>
+        <item>0.5</item>
+        <item>50</item>
+        <item>9</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="lasagne_cat">
+        <item>Frukt och Grönt</item>
+        <item>Frukt och Grönt</item>
+        <item>Frysvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Mejeri</item>
+        <item>Mejeri</item>
+        <item>Mejeri</item>
+    </string-array>
+
+    <string-array name="bolognese">
+        <item>vitlöksklyftor</item>
+        <item>gul lök</item>
+        <item>sojafärs</item>
+        <item>pasta</item>
+        <item>tomatpuré</item>
+        <item>grönsaksbuljongtärning</item>
+        <item>salt</item>
+        <item>svartpeppar</item>
+        <item>oregano</item>
+        <item>ketchup</item>
+    </string-array>
+
+    <string-array name="bolognese_unit">
+        <item>st</item>
+        <item>st</item>
+        <item>g</item>
+        <item>port</item>
+        <item>msk</item>
+        <item>st</item>
+        <item>tsk</item>
+        <item>krm</item>
+        <item>msk</item>
+        <item>-</item>
+    </string-array>
+
+    <string-array name="bolognese_amount">
+        <item>2</item>
+        <item>1</item>
+        <item>400</item>
+        <item>4</item>
+        <item>2</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>3</item>
+        <item>0</item>
+    </string-array>
+
+    <string-array name="bolognese_cat">
+        <item>Frukt och Grönt</item>
+        <item>Frukt och Grönt</item>
+        <item>Frysvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+    </string-array>
+
+    <string-array name="pizza_bianca">
+        <item>pizzakit</item>
+        <item>rödlök</item>
+        <item>ruccola</item>
+        <item>salt</item>
+        <item>svartpeppar</item>
+        <item>oregano</item>
+        <item>tryffelkräm</item>
+        <item>färskost</item>
+        <item>creme fresh</item>
+        <item>riven ost</item>
+    </string-array>
+
+    <string-array name="pizza_bianca_unit">
+        <item>st</item>
+        <item>st</item>
+        <item>g</item>
+        <item>tsk</item>
+        <item>krm</item>
+        <item>msk</item>
+        <item>brk</item>
+        <item>g</item>
+        <item>dl</item>
+        <item>dl</item>
+    </string-array>
+
+    <string-array name="pizza_bianca_amount">
+        <item>1</item>
+        <item>0.5</item>
+        <item>80</item>
+        <item>0.5</item>
+        <item>1</item>
+        <item>2</item>
+        <item>1</item>
+        <item>200</item>
+        <item>2.5</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="pizza_bianca_cat">
+        <item>Mejeri</item>
+        <item>Frukt och Grönt</item>
+        <item>Frukt och Grönt</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Mejeri</item>
+        <item>Mejeri</item>
+        <item>Mejeri</item>
+    </string-array>
+
+
+    <string-array name="spenatpaj">
+        <item>babyspenat</item>
+        <item>rödlök</item>
+        <item>soltorkade tomater</item>
+        <item>salt</item>
+        <item>svartpeppar</item>
+        <item>fetaost</item>
+        <item>filodeg</item>
+        <item>grädde</item>
+        <item>ägg</item>
+        <item>smör</item>
+    </string-array>
+
+    <string-array name="spenatpaj_unit">
+        <item>g</item>
+        <item>st</item>
+        <item>brk</item>
+        <item>tsk</item>
+        <item>krm</item>
+        <item>pkt</item>
+        <item>pkt</item>
+        <item>dl</item>
+        <item>st</item>
+        <item>g</item>
+    </string-array>
+
+    <string-array name="spenatpaj_amount">
+        <item>80</item>
+        <item>0.5</item>
+        <item>0.5</item>
+        <item>0.5</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>3</item>
+        <item>3</item>
+        <item>100</item>
+    </string-array>
+
+    <string-array name="spenatpaj_cat">
+        <item>Frukt och Grönt</item>
+        <item>Frukt och Grönt</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Mejeri</item>
+        <item>Mejeri</item>
+        <item>Mejeri</item>
+        <item>Mejeri</item>
+        <item>Mejeri</item>
+    </string-array>
+
+    <string-array name="gronkalspaj">
+        <item>grönkål</item>
+        <item>rödlök</item>
+        <item>vetemjöl</item>
+        <item>salt</item>
+        <item>svartpeppar</item>
+        <item>grädde</item>
+        <item>ägg</item>
+        <item>smör</item>
+    </string-array>
+
+    <string-array name="gronkalspaj_unit">
+        <item>g</item>
+        <item>st</item>
+        <item>dl</item>
+        <item>tsk</item>
+        <item>krm</item>
+        <item>dl</item>
+        <item>st</item>
+        <item>g</item>
+    </string-array>
+
+    <string-array name="gronkalspaj_amount">
+        <item>200</item>
+        <item>1</item>
+        <item>2</item>
+        <item>0.5</item>
+        <item>1</item>
+        <item>3</item>
+        <item>3</item>
+        <item>100</item>
+    </string-array>
+
+    <string-array name="gronkalspaj_cat">
+        <item>Frukt och Grönt</item>
+        <item>Frukt och Grönt</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Mejeri</item>
+        <item>Mejeri</item>
+        <item>Mejeri</item>
+    </string-array>
+
+
+    <string-array name="falafel">
+        <item>falafel</item>
+        <item>pitabröd</item>
+        <item>tomater</item>
+        <item>gurka</item>
+        <item>rödlök</item>
+        <item>hummus</item>
+        <item>creme fresh</item>
+    </string-array>
+
+    <string-array name="falafel_unit">
+        <item>g</item>
+        <item>st</item>
+        <item>st</item>
+        <item>st</item>
+        <item>st</item>
+        <item>g</item>
+        <item>dl</item>
+    </string-array>
+
+    <string-array name="falafel_amount">
+        <item>300</item>
+        <item>8</item>
+        <item>1</item>
+        <item>0.5</item>
+        <item>1</item>
+        <item>100</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="falafel_cat">
+        <item>Frysvaror</item>
+        <item>Torrvaror</item>
+        <item>Frukt och Grönt</item>
+        <item>Frukt och Grönt</item>
+        <item>Frukt och Grönt</item>
+        <item>Mejeri</item>
+        <item>Mejeri</item>
+    </string-array>
+
+    <string-array name="tacos">
+        <item>vitlöksklyftor</item>
+        <item>tomater</item>
+        <item>gurka</item>
+        <item>majs</item>
+        <item>rödlök</item>
+        <item>avokado</item>
+        <item>tacobröd</item>
+        <item>tacosås</item>
+        <item>tacokrydda</item>
+        <item>creme fresh</item>
+        <item>riven ost</item>
+        <item>sojafärs</item>
+    </string-array>
+
+    <string-array name="tacos_unit">
+        <item>st</item>
+        <item>st</item>
+        <item>st</item>
+        <item>brk</item>
+        <item>st</item>
+        <item>st</item>
+        <item>st</item>
+        <item>brk</item>
+        <item>pkt</item>
+        <item>dl</item>
+        <item>dl</item>
+        <item>g</item>
+    </string-array>
+
+    <string-array name="tacos_amount">
+        <item>2</item>
+        <item>2</item>
+        <item>0.5</item>
+        <item>1</item>
+        <item>1</item>
+        <item>3</item>
+        <item>8</item>
+        <item>1</item>
+        <item>1</item>
+        <item>2</item>
+        <item>1</item>
+        <item>400</item>
+    </string-array>
+
+    <string-array name="tacos_cat">
+        <item>Frukt och Grönt</item>
+        <item>Frukt och Grönt</item>
+        <item>Frukt och Grönt</item>
+        <item>Frukt och Grönt</item>
+        <item>Frukt och Grönt</item>
+        <item>Frukt och Grönt</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Mejeri</item>
+        <item>Mejeri</item>
+        <item>Frysvaror</item>
+    </string-array>
+
+    <string-array name="risotto">
+        <item>vitlöksklyftor</item>
+        <item>scharlottenlök</item>
+        <item>champinjoner</item>
+        <item>risottoris</item>
+        <item>grönsaksbuljongtärning</item>
+        <item>matlagningsvin</item>
+        <item>olivolja</item>
+        <item>riven parmesan</item>
+    </string-array>
+
+    <string-array name="risotto_unit">
+        <item>st</item>
+        <item>st</item>
+        <item>g</item>
+        <item>dl</item>
+        <item>st</item>
+        <item>dl</item>
+        <item>msk</item>
+        <item>dl</item>
+    </string-array>
+
+    <string-array name="risotto_amount">
+        <item>1</item>
+        <item>2</item>
+        <item>100</item>
+        <item>3</item>
+        <item>2</item>
+        <item>1</item>
+        <item>3</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="risotto_cat">
+        <item>Frukt och Grönt</item>
+        <item>Frukt och Grönt</item>
+        <item>Frukt och Grönt</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Mejeri</item>
+    </string-array>
+
+    <string-array name="palak_paneer">
+        <item>scharlottenlök</item>
+        <item>babyspenat</item>
+        <item>vitlök</item>
+        <item>tomater</item>
+        <item>ingefära</item>
+        <item>ris</item>
+        <item>matlagningsvin</item>
+        <item>olivolja</item>
+        <item>krossade tomater</item>
+        <item>tomatpuré</item>
+        <item>grönsaksbuljongtärning</item>
+        <item>garam masala</item>
+        <item>vitlöksbröd</item>
+        <item>salt</item>
+        <item>paneerost</item>
+        <item>grädde</item>
+    </string-array>
+
+    <string-array name="palak_paneer_unit">
+        <item>st</item>
+        <item>g</item>
+        <item>st</item>
+        <item>st</item>
+        <item>msk</item>
+        <item>port</item>
+        <item>dl</item>
+        <item>msk</item>
+        <item>pkt</item>
+        <item>msk</item>
+        <item>st</item>
+        <item>msk</item>
+        <item>-</item>
+        <item>tsk</item>
+        <item>g</item>
+        <item>dl</item>
+    </string-array>
+
+    <string-array name="palak_paneer_amount">
+        <item>1</item>
+        <item>200</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>4</item>
+        <item>1</item>
+        <item>3</item>
+        <item>1</item>
+        <item>2</item>
+        <item>1</item>
+        <item>1</item>
+        <item>0</item>
+        <item>0.5</item>
+        <item>400</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="palak_paneer_cat">
+        <item>Frukt och Grönt</item>
+        <item>Frukt och Grönt</item>
+        <item>Frukt och Grönt</item>
+        <item>Frukt och Grönt</item>
+        <item>Frukt och Grönt</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Mejeri</item>
+        <item>Mejeri</item>
+    </string-array>
+
+    <string-array name="zucchinipasta">
+        <item>vitlöksklyftor</item>
+        <item>zucchini</item>
+        <item>champinjoner</item>
+        <item>pasta</item>
+        <item>solroskärnor</item>
+        <item>grädde</item>
+        <item>riven ost</item>
+    </string-array>
+
+    <string-array name="zucchinipasta_unit">
+        <item>st</item>
+        <item>st</item>
+        <item>g</item>
+        <item>port</item>
+        <item>dl</item>
+        <item>dl</item>
+        <item>dl</item>
+
+    </string-array>
+
+    <string-array name="zucchinipasta_amount">
+        <item>2</item>
+        <item>1</item>
+        <item>200</item>
+        <item>4</item>
+        <item>1</item>
+        <item>3</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="zucchinipasta_cat">
+        <item>Frukt och Grönt</item>
+        <item>Frukt och Grönt</item>
+        <item>Frukt och Grönt</item>
+        <item>Torrvaror</item>
+        <item>Torrvaror</item>
+        <item>Mejeri</item>
+        <item>Mejeri</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
