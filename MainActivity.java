@@ -344,15 +344,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onInvent(View caller) {
-
         /* Sorting on category*/
         /*System.out.println("Category Sorting:");
         Collections.sort(menu.get(0).ingredients, Ingredient.sortIngrdnts);
         for(Ingredient str: menu.get(0).ingredients){
             System.out.println(str);
         }*/
+
         Intent intent = new Intent(this, com.inkopslistan2.InventActivity.class);
         intent.putExtra("menu", menu);
+        intent.putExtra("recipes", recipes);
 
         this.startActivity(intent);
 

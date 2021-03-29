@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import java.io.Serializable;
 import java.util.Comparator;
 
-public class Ingredient implements Parcelable {
+public class Ingredient implements Parcelable, Cloneable  {
     private String ingrdnt;
     private double amount;
     private String unit;
@@ -106,4 +106,11 @@ public class Ingredient implements Parcelable {
         parcel.writeString(cat);
         parcel.writeByte((byte) (checkedItem ? 1 : 0));
     }
+
+    @Override
+    public Ingredient clone() throws CloneNotSupportedException {
+        // TODO: Your custom clone logic
+        return (Ingredient) super.clone();
+    }
+
 }

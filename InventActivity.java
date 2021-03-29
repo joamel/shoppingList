@@ -1,7 +1,5 @@
 package com.inkopslistan2;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,30 +7,32 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
-import android.widget.TextClock;
+import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.lang.reflect.Array;
+import org.xml.sax.ext.DeclHandler;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
-public class InventActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static final ArrayList<Recipe> recipes = new ArrayList<>();
-    private ArrayList<Recipe> menu;
+public class InventActivity extends AppCompatActivity implements View.OnClickListener, AddDialogFragment.AddDialogFragmentListener { // AddIngrdntDialogFragment.AddIngrdntDialogListener { //NewIngrdntFragment.OkClickListener { //
+
+    private ArrayList<Recipe> recipes = new ArrayList<>();
+    private ArrayList<Recipe> menu, menuTempList;
     private TextView tv1, tv2, tv3, tv4, tv5, tv6, tv7;
     private ImageView iv1, iv2, iv3, iv4, iv5, iv6, iv7;
     private ArrayList<TextView> textViews = new ArrayList<>();
@@ -44,9 +44,18 @@ public class InventActivity extends AppCompatActivity implements View.OnClickLis
     private boolean[][] checkedItemsList;
     private boolean[] checkedItems;
     private ArrayList[] mUserItemsList;
-    private String[][] ingredientsList, amountList;
+    private String[][] amountList;
     private ArrayList mUserItems = new ArrayList<>();
-    private ArrayList<Ingredient> tempList, ingredients;
+    private ArrayList<Ingredient> tempList, ingredients,ingredientsList;
+
+    private static final String[] INGREDIENTS = new String[] {
+            "Belgium", "France", "Italy", "Germany", "Spain"
+    };
+    private static final String[] UNITS = new String[] {
+            "st", "g", "l", "dl", "msk", "tsk", "krm", "port", "pkt", "brk", "-"
+    };
+    private NumberPicker picker1;
+    private String[] pickerVals;
 
 
     public InventActivity() {
@@ -70,6 +79,7 @@ public class InventActivity extends AppCompatActivity implements View.OnClickLis
         registerReceiver(broadcastReceiver, new IntentFilter("finish_activity"));
 
         Intent intent = getIntent();
+        recipes = this.getIntent().getParcelableArrayListExtra("recipes");
         menu = this.getIntent().getParcelableArrayListExtra("menu");
         tv1 = findViewById(R.id.textView1);
         tv2 = findViewById(R.id.textView2);
@@ -182,6 +192,9 @@ public class InventActivity extends AppCompatActivity implements View.OnClickLis
         }*/
 
         //Skapar alertDialog för gällande recept från knapptryck innan.
+
+        InventDialog();
+
         MaterialAlertDialogBuilder mBuilder = new MaterialAlertDialogBuilder(InventActivity.this);
         mBuilder.setTitle(R.string.dialog_title);
         mBuilder.setMultiChoiceItems(dishList[currDish], checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
@@ -209,9 +222,7 @@ public class InventActivity extends AppCompatActivity implements View.OnClickLis
                 //checkedItemsList[currDish] = checkedItems;
                 try {
                     for (int i = 0; i < menu.get(currDish).ingredients.size(); i++) {
-
-                        System.out.println(checkedItemsList[currDish][i]);
-
+                        //System.out.println(checkedItemsList[currDish][i]);
                         menu.get(currDish).ingredients.get(i).setChecked(checkedItemsList[currDish][i]);
                     }
 
@@ -243,14 +254,17 @@ public class InventActivity extends AppCompatActivity implements View.OnClickLis
         mDialog.show();
     }
 
-    public void shoppingList(View caller) {
-        //Skapar två temporära listor att föra över ingredienser och
+    public void shoppingList(View caller) throws CloneNotSupportedException {
+
+        //Skapar två temporära listor att föra över ingredienser
         tempList = new ArrayList<>();
-        ingredients = new ArrayList<>();
-        //Lägger alla ingredienser och mängder i samma listor
+        ingredientsList = new ArrayList<>();
+
+        //Lägger alla ingredienser i samma lista
         for (Recipe rec:menu) {
             try {
-                for (Ingredient ingrdnt:rec.ingredients) {
+                tempList = cloneList(rec.ingredients);
+                for (Ingredient ingrdnt:tempList) {
                 //Om ingrediensen redan är avcheckad
                 if (ingrdnt.getChecked()) {
                     //exekveras inget.
@@ -261,7 +275,7 @@ public class InventActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 //annars läggs ingrediensen till tempList
                 else {
-                    tempList.add(ingrdnt);
+                    ingredientsList.add(ingrdnt);
                     }
                 }
             }
@@ -270,21 +284,29 @@ public class InventActivity extends AppCompatActivity implements View.OnClickLis
             }
         }
 
-        ingredients = tempList;
-        System.out.println(ingredients);
         //Skapar ett intent och skickar med shopList
         Intent intent = new Intent(this, com.inkopslistan2.ListActivity.class);
-        intent.putExtra("ingredients", ingredients);
+        intent.putExtra("ingredients", ingredientsList);
 
-        //intent.putExtra(ListActivity.SHOPPING_LIST, shopList);
         //startar aktiviteten ListActivity
         this.startActivity(intent);
+    }
+
+
+    public static ArrayList<Ingredient> cloneList(ArrayList<Ingredient> list) throws CloneNotSupportedException {
+        ArrayList<Ingredient> clone = new ArrayList<Ingredient>(list.size());
+        for (Ingredient item : list) {
+            if(item != null)
+                clone.add(item.clone());
+        }
+        return clone;
     }
 
     //Metod för att se om ingrediensen redan förekommer i tempList
     private boolean isPresent(String seekWord){
         //for each-loop
-        for(Ingredient v:tempList) {
+        System.out.println(ingredientsList.size());
+        for(Ingredient v:ingredientsList) {
             //om ingrediensen finns med i tempList
             if (v.getIngrdnt().equals(seekWord)){
                 return true;}
@@ -294,25 +316,72 @@ public class InventActivity extends AppCompatActivity implements View.OnClickLis
 
     //Metod för att addera samman ingredienser som förekommer flera gånger.
     public void addQuantities(String seekWord, double quantity){
-        for(Ingredient v: tempList) {
+        for(Ingredient v: ingredientsList) {
             if (v.getIngrdnt().equals(seekWord)){
-                //mängden för sökordets position tas fram
+                //mängden adderas till bef mängd.
                 v.setAmount(v.getAmount()+quantity);
             }
         }
     }
 
+
     public void add(View caller) {
 
+        //showAlertDialog();
+
+        /*FragmentManager fm = getSupportFragmentManager();
+        NewIngrdntFragment dialog = new NewIngrdntFragment();
+        dialog.show(fm, "fragment_alert");*/
+        /**
+        Recipe rec = new Recipe("Övrigt");
+        menu.add(rec);
 
         MaterialAlertDialogBuilder mBuilder = new MaterialAlertDialogBuilder(InventActivity.this);
-        mBuilder.setTitle(R.string.dialog_title);
-        mBuilder.setView(R.layout.add_items_dialog);
-        mBuilder.setMessage("Enter your basic details");
-        mBuilder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+        mBuilder.setTitle("Lägg till ny vara");
+        View view =LayoutInflater.from(this).inflate(R.layout.add_items_dialog, null);
+        view.setForegroundGravity(Gravity.CENTER_HORIZONTAL);
+        mBuilder.setView(view);
+        String[] amountList = new String[1];
+        String[] igrdntList = new String[1];
+        String[] unitList = new String[1];
+        String[] catList = new String[1];
+        //https://developer.android.com/reference/android/widget/AutoCompleteTextView
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, INGREDIENTS);
+        AutoCompleteTextView ingrdntView = view.findViewById(R.id.et_name);
+        ingrdntView.setAdapter(adapter1);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, UNITS);
+        AutoCompleteTextView unitsView = view.findViewById(R.id.et_unit);
+        unitsView.setAdapter(adapter2);
+        picker1 = view.findViewById(R.id.numberpicker_amount);
+        /*picker1.setMaxValue(4);
+        picker1.setMinValue(0);
+        pickerVals  = new String[] {"dog", "cat", "lizard", "turtle", "axolotl"};
+        System.out.println(pickerVals[0]);*/
+        /*
+        picker1.setMaxValue(4);
+        picker1.setMinValue(0);
+        pickerVals = new String[5];
+        for(int i = 0; i < pickerVals.length; i++) {
+            double d = i;
+            pickerVals[i] = String.valueOf(d/2);
+        }
+        picker1.setDisplayedValues(pickerVals);
+
+        picker1.setOnValueChangedListener((numberPicker, i, i1) -> {
+            int valuePicker1 = picker1.getValue();
+            Log.d("picker value", pickerVals[valuePicker1]);
+        });
+        mBuilder.setPositiveButton("Lägg till", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
-                //checkedItemsList[currDish] = checkedItems;
+                igrdntList[0] = ingrdntView.getText().toString();
+                amountList[0] = "1";
+                unitList[0] = "st";
+                catList[0] = "torrvaror";
+                menu.get(7).addIngredients(amountList, igrdntList, unitList, catList);
+
             }
         });
         mBuilder.setNegativeButton(R.string.dismiss_label, new DialogInterface.OnClickListener() {
@@ -323,6 +392,7 @@ public class InventActivity extends AppCompatActivity implements View.OnClickLis
         });
         AlertDialog mDialog = mBuilder.create();
         mDialog.show();
+        */
 
     /*final MaterialAlertDialogBuilder mBuilder = new MaterialAlertDialogBuilder(this);
     FloatingActionButton fAButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
@@ -338,9 +408,46 @@ public class InventActivity extends AppCompatActivity implements View.OnClickLis
     });*/
     }
 
+    public void InventDialog() {
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("menu", menu);
+        bundle.putInt("current", currDish);
+        BundleArrays bundlearray = new BundleArrays(checkedItemsList);
+        System.out.println(bundlearray);
+        bundle.putSerializable("bundleList", bundlearray);
+        bundle.putStringArray("dishList", dishList[currDish]);
+        InventDialogFragment inventDialogFragment = new InventDialogFragment();
+        inventDialogFragment.setArguments(bundle);
+        inventDialogFragment.show(getSupportFragmentManager(), "Inventera");
+
+    }
+
+    public void AddIngrdntDialog(View caller) {
+        AddDialogFragment addDialogFragment = new AddDialogFragment();
+        addDialogFragment.show(getSupportFragmentManager(), "Lägg till inköp");
+    }
+
+
+    @Override
+    public void applyTexts(String amount, String unit, String ingrdnt, String cat) {
+        String[] amountList = new String[1];
+        String[] igrdntList = new String[1];
+        String[] unitList = new String[1];
+        String[] catList = new String[1];
+        igrdntList[0] = ingrdnt;
+        amountList[0] = amount;
+        unitList[0] = unit;
+        catList[0] = cat;
+        Recipe rec = new Recipe("Övrigt");
+        menu.add(rec);
+        menu.get(7).addIngredients(amountList, igrdntList, unitList, catList);
+    }
+
 
     public void back(View caller){
         finish();
     }
+
 }
 

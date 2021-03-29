@@ -1,6 +1,7 @@
 package com.inkopslistan2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -32,8 +33,31 @@ public class ListActivity extends AppCompatActivity {
         checkedItems = new boolean[shoppingList.length];
         shoppingList();
     }
+
+    /*
     public void shoppingList() {
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(ListActivity.this);
+        DialogFragment dialog = new AlertDialogFragment();
+        Bundle args = new Bundle();
+        args.putBooleanArray(AlertDialogFragment.ARG_CHECKED_ITEMS, checkedItems);
+        args.putIntegerArrayList(AlertDialogFragment.ARG_MUSER_ITEMS, mUserItems);
+        dialog.setArguments(args);
+        //dialog.setTargetFragment(this,);
+        dialog.show(getSupportFragmentManager(), "dialog");
+
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_CANCELED) {
+            checkedItems = data.getBooleanArrayExtra("checked_items");
+            mUserItems = data.getIntegerArrayListExtra("mUser_items");
+        }
+    }
+    */
+
+
+    public void shoppingList() {
+    AlertDialog.Builder mBuilder = new AlertDialog.Builder(ListActivity.this);
         mBuilder.setTitle(R.string.shopping_title);
         mBuilder.setMultiChoiceItems(shoppingList, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
@@ -67,8 +91,11 @@ public class ListActivity extends AppCompatActivity {
             }
         });
         AlertDialog mDialog = mBuilder.create();
-        mDialog.show();
-    }
+        mDialog.show(); }
+
+
+
+
 
     public void onShoppingList(View caller) {
         shoppingList();

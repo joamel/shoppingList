@@ -67,4 +67,6 @@ public class Recipe implements Parcelable {
         parcel.writeTypedList(ingredients);
         parcel.writeString(iv);
     }
+
+
 }

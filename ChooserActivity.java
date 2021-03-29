@@ -1,11 +1,13 @@
 package com.inkopslistan2;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,13 +20,17 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class ChooserActivity extends AppCompatActivity implements Serializable {
     public static final String PARAM_INSTRUCTION = "instr";
     public static final String PARAM_CHOICES = "choices";
     public static final String RETURN_VALUE = "return";
-    private ArrayList<Recipe> recipes, menu;
+    private ArrayList<Recipe> recipes, menu, tempList;
     //private ArrayList<ArrayList<String>> dishList;
     private ArrayList<Integer> indexList;
     ListView myList;
@@ -32,7 +38,7 @@ public class ChooserActivity extends AppCompatActivity implements Serializable {
     private Recipe selectedRec;
 
 
-
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,53 +51,39 @@ public class ChooserActivity extends AppCompatActivity implements Serializable {
         recipes = this.getIntent().getParcelableArrayListExtra("recipes");
         menu = this.getIntent().getParcelableArrayListExtra("menu");
         ArrayList<String> tempDish = new ArrayList<>();
+        ArrayList<Recipe> tempList = new ArrayList<>();
 
-        //recipes = (ArrayList<Recipe>) intent.getSerializableExtra("ArrayList");
-        //CharSequence[] cs = recipes.toArray(new CharSequence[recipes.size()]);
+        //tempList = menu.removeAll(Collections.singelton(null));
+        //tempList = menu.removeAll(Collections.(null));
+        /*List<Recipe> tempList = menu.stream()
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());*/
+        //for(Recipe temp: tempList)
+        //    System.out.println(temp);
+
 
 
         //Sektion för att enbart visa icke-valda alternativ i listViewn
         tempDish.add("Välj rätt");
 
         for(Recipe rec:recipes) {
-            try {
-                tempDish.add(rec.name);
-            }
-            catch(NullPointerException e) {
-                Log.v("myTag", String.valueOf(e));
-            }
+            //if(rec.name != null)
+            tempDish.add(rec.name);
+            tempList.add(rec);
         }
+
         for (Recipe men:menu) {
-            try {
+            if (men != null) {
+                int idx = tempDish.indexOf(men.name);
                 tempDish.remove(men.name);
+                //-1 eftersom tempDish har "Välj rätt" på index 0.
+                tempList.remove(idx - 1);
             }
-            catch(NullPointerException e) {
-                Log.v("myTag", String.valueOf(e));
-            }
-
         }
 
-
-
-        /*
-        for (int i = 0; i < recipes.size(); i++) {
-            try {
-                tempDish.add(recipes.get(i).name);
-                assert menu != null;
-                for (int j = 0; j < menu.size(); j++) {
-                    if(!recipes.contains(menu.get(j)))
-                        tempDish.remove(menu.get(j).name);
-                }
-            }
-            catch (NullPointerException e) {
-                Log.v("myTag", String.valueOf(e));
-            }*/
-
-
-        final String[][] dishList = new String[recipes.size()][];
-
+        final String[][] dishList = new String[tempList.size()][];
         int i = 0;
-        for (Recipe rec: recipes) {
+        for (Recipe rec: tempList) {
             final String[] ingrdntList = new String[rec.ingredients.size()];
             for (int j = 0; j < rec.ingredients.size(); j++) {
                 if (rec.ingredients.get(j).getAmount() != 0)
@@ -100,6 +92,7 @@ public class ChooserActivity extends AppCompatActivity implements Serializable {
                     ingrdntList[j] = rec.ingredients.get(j).getIngrdnt();
             }
             dishList[i] = ingrdntList;
+
             i++;
         }
 
@@ -150,4 +143,6 @@ public class ChooserActivity extends AppCompatActivity implements Serializable {
           }
         });
     }
+
+
 }
