@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -12,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,54 +32,80 @@ public class InventDialogFragment extends DialogFragment implements Serializable
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Bundle extras = getActivity().getIntent().getExtras();
         ArrayList<Recipe> menu = extras.getParcelableArrayList("menu");
-        int currDish = extras.getInt("current");
-        String[] dishList = extras.getStringArray("dishList");
-        Serializable boleanList = extras.getSerializable("bundleList");
-        System.out.println(boleanList);
+        int currDish = getArguments().getInt("current");
 
-        //checkedItems = checkedItemsList[currDish];
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
 
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.fragment_add_ingrdnt, null);
+        assert menu != null;
+        Recipe temp = menu.get(currDish);
+        String[] dishList;
+        boolean[] checkedItems = new boolean[temp.ingredients.size()];
+        final String[] ingrdntList = new String[temp.ingredients.size()];
+        for (int j = 0; j < temp.ingredients.size(); j++) {
+            checkedItems[j] = temp.ingredients.get(j).getChecked();
+            if (temp.ingredients.get(j).getAmount() != 0)
+                ingrdntList[j] = temp.ingredients.get(j).getAmount() + " " + temp.ingredients.get(j).getUnit() + " " + temp.ingredients.get(j).getIngrdnt();
+            else
+                ingrdntList[j] = temp.ingredients.get(j).getIngrdnt();
+        }
 
-        mBuilder.setView(view)
-                .setTitle("Lägg till")
-                .setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                })
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String amount = editTextAmount.getText().toString();
-                        String unit = editTextUnit.getText().toString();
-                        String ingrdnt = editTextIngrdnt.getText().toString();
-                        String cat = editTextCat.getText().toString();
-                        //listener.applyTexts(amount, unit, ingrdnt);
-                    }
-                });
+        dishList = ingrdntList;
 
-        editTextAmount = view.findViewById(R.id.edit_amount);
-        editTextUnit = view.findViewById(R.id.edit_unit);
-        editTextIngrdnt = view.findViewById(R.id.edit_ingrdnt);
-        editTextCat = view.findViewById(R.id.edit_cat);
+
+
+
+        mBuilder.setTitle(R.string.dialog_title);
+        mBuilder.setMultiChoiceItems(dishList, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int position, boolean isChecked) {
+                /*if (isChecked) {
+                    if (!mUserItems.contains(position))
+                        mUserItems.add(position);
+                } else {
+                    mUserItems.remove((Integer.valueOf(position)));
+                }
+            */
+            }
+        });
+
+        mBuilder.setCancelable(false);
+        mBuilder.setPositiveButton(R.string.ok_label, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                //checkedItemsList[currDish] = checkedItems;
+                try {
+                    for (int i = 0; i < temp.ingredients.size(); i++) {
+                        //System.out.println(checkedItemsList[currDish][i]);
+                        temp.ingredients.get(i).setChecked(checkedItems[i]);
+                    }
+
+                } catch (NullPointerException e) {
+                    Log.v("myTag", String.valueOf(e));
+                }
+            }
+
+        });
+        mBuilder.setNegativeButton(R.string.dismiss_label, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        mBuilder.setNeutralButton(R.string.clear_all_label, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                for (int i = 0; i < checkedItems.length; i++) {
+                    checkedItems[i] = false;
+                    menu.get(currDish).ingredients.get(i).setChecked(false);
+                    //mUserItems.clear();
+                    //Uppdaterar mUserItemsList med värdet innan ny knapp trycks och mUserItems skrivs över.
+                    //mUserItemsList[currDish] = mUserItems;
+                }
+            }
+        });
 
         return mBuilder.create();
     }
-    /*
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        try {
-            listener = (InventDialogFragmentListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() +
-                    "must implement InventDialogFragmentListener");
-        }
-
-    }*/
 
     public interface InventDialogFragmentListener {
         void applyTexts(ArrayList<Recipe> menu, String[] checkedItems, String[] currDishList);

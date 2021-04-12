@@ -27,6 +27,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import org.xml.sax.ext.DeclHandler;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class InventActivity extends AppCompatActivity implements View.OnClickListener, AddDialogFragment.AddDialogFragmentListener { // AddIngrdntDialogFragment.AddIngrdntDialogListener { //NewIngrdntFragment.OkClickListener { //
@@ -180,7 +181,7 @@ public class InventActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         //mUserItems = mUserItemsList[currDish];
-        checkedItems = checkedItemsList[currDish];
+        //checkedItems = checkedItemsList[currDish];
         /*//Om checkedItems längd är 0
         if (checkedItems.length == 0)
             //skapar tom boolean-lista med längden av listItems.
@@ -194,7 +195,7 @@ public class InventActivity extends AppCompatActivity implements View.OnClickLis
         //Skapar alertDialog för gällande recept från knapptryck innan.
 
         InventDialog();
-
+/*
         MaterialAlertDialogBuilder mBuilder = new MaterialAlertDialogBuilder(InventActivity.this);
         mBuilder.setTitle(R.string.dialog_title);
         mBuilder.setMultiChoiceItems(dishList[currDish], checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
@@ -206,7 +207,7 @@ public class InventActivity extends AppCompatActivity implements View.OnClickLis
                 } else {
                     mUserItems.remove((Integer.valueOf(position)));
                 }
-            */
+            *//*
             }
         });
         //Uppdaterar listorna med värdena innan ny knapp trycks och dessa skrivs över.
@@ -251,7 +252,7 @@ public class InventActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
         AlertDialog mDialog = mBuilder.create();
-        mDialog.show();
+        mDialog.show();*/
     }
 
     public void shoppingList(View caller) throws CloneNotSupportedException {
@@ -305,7 +306,6 @@ public class InventActivity extends AppCompatActivity implements View.OnClickLis
     //Metod för att se om ingrediensen redan förekommer i tempList
     private boolean isPresent(String seekWord){
         //for each-loop
-        System.out.println(ingredientsList.size());
         for(Ingredient v:ingredientsList) {
             //om ingrediensen finns med i tempList
             if (v.getIngrdnt().equals(seekWord)){
@@ -413,10 +413,11 @@ public class InventActivity extends AppCompatActivity implements View.OnClickLis
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("menu", menu);
         bundle.putInt("current", currDish);
-        BundleArrays bundlearray = new BundleArrays(checkedItemsList);
-        System.out.println(bundlearray);
-        bundle.putSerializable("bundleList", bundlearray);
-        bundle.putStringArray("dishList", dishList[currDish]);
+        //BundleArrays bundlearray = new BundleArrays(checkedItemsList);
+        /*bundle.putSerializable("bundleList", bundlearray);
+        ArrayList<boolean[]> tempBoList = new ArrayList<>();
+        tempBoList.addAll(Arrays.asList(checkedItemsList));
+        bundle.putStringArray("dishList", dishList[currDish]);*/
         InventDialogFragment inventDialogFragment = new InventDialogFragment();
         inventDialogFragment.setArguments(bundle);
         inventDialogFragment.show(getSupportFragmentManager(), "Inventera");
